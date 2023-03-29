@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>Add mock</h1>
+    <form id="mock-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <br>
+        <label for="age">Age:</label>
+        <input type="number" id="age" required>
+        <br>
+        <label for="comment">Comment:</label>
+        <input type="text" id="comment">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('mock-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const comment = document.getElementById('comment').value;
+
+            const data = {
+                name,
+                age: parseInt(age),
+                comment
+            };
+
+            try {
+                const response = await fetch('/api/mock', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    console.log('mock created successfully:', result);
+                    alert('mock created successfully');
+                    document.getElementById('mock-form').reset();
+                } else {
+                    const error = await response.json();
+                    console.error('Error creating mock:', error);
+                    alert('Error creating mock');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error creating mock');
+            }
+        });
+    </script>
+</body>
+</html>
