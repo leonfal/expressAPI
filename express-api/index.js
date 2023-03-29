@@ -31,14 +31,17 @@ app.use(cors());
 
 // POST endpoint to add mock
 app.post('/api/mock', async (req, res) => {
+    console.log('Request body:', req.body);
+  
     try {
-        const newMock = new Mock(req.body);
-        await newMock.save();
-        res.status(201).json({ message: 'Mock query successful', mock: newMock });
+      const newMock = new Mock(req.body);
+      await newMock.save();
+      res.status(201).json({ message: 'Mock query successful', mock: newMock });
     } catch (error) {
-        res.status(400).json({ message: 'Error creating mock query', error });
+      console.error('Error creating mock:', error);
+      res.status(400).json({ message: 'Error creating mock', error });
     }
-});
+  });
 
 // GET endpoint to fetch all mocks
 app.get('/api/mock', async (req, res) => {
