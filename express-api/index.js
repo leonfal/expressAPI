@@ -31,10 +31,10 @@ app.use(cors());
 
 // POST endpoint to add mock
 app.post('/api/mock', async (req, res) => {
-    console.log('Request body:', req.body);
+    const { name, age, comment } = req.body;
   
     try {
-      const newMock = new Mock(req.body);
+      const newMock = new Mock({ name, age, comment });
       await newMock.save();
       res.status(201).json({ message: 'Mock query successful', mock: newMock });
     } catch (error) {
