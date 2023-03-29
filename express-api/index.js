@@ -1,14 +1,12 @@
 import express from 'express';
-import { json } from 'body-parser';
+import bodyParser from 'body-parser';
 import { connect, Schema, model } from 'mongoose';
 import cors from "cors";
-import https from 'https';
-import fs from 'fs';
 
 const app = express();
 
 // Connect to MongoDB
-connect('MONGO_URL', {
+connect('mongodb+srv://devfix:iHyq3nCtXCwPqfl3@maincluster.tchhu9m.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
@@ -26,11 +24,10 @@ const mockSchema = new Schema({
 const Mock = model('Mock', mockSchema);
 
 // Middleware to parse JSON data
-app.use(json());
+app.use(express.json());
+app.use(bodyParser.json());
 // Cross origin for communication between shopify and express
 app.use(cors());
-// use a static html file as the server frontend
-app.use(express.static('public'));
 
 // POST endpoint to add mock
 app.post('/api/mock', async (req, res) => {
@@ -53,13 +50,8 @@ app.get('/api/mock', async (req, res) => {
     }
 });
 
-// HTTPS server configuration
-// const options = {
-//   key: fs.readFileSync('/path/to/private/key.pem'),
-//   cert: fs.readFileSync('/path/to/certificate.pem')
-// };
-
-// // Create an HTTPS server instance
-// https.createServer(options, app).listen(443, () => {
-//   console.log('Server is running on port 443');
-// });
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
