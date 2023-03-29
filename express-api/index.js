@@ -36,10 +36,8 @@ app.post('/api/mock', async (req, res) => {
     try {
       const newMock = new Mock({ name, age, comment });
       await newMock.save();
-
-      const mock = await Mock.find();
-
-      res.status(201).json(mock);
+      
+      res.status(201).json({ message: 'Mock query successful', mock: newMock });
     } catch (error) {
       console.error('Error creating mock:', error);
       res.status(400).json({ message: 'Error creating mock', error });
