@@ -2,11 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { connect, Schema, model } from 'mongoose';
 import cors from "cors";
+import dotenv from "dotenv";
 
 const app = express();
-
+dotenv.config();
 // Connect to MongoDB
-connect('mongodb+srv://devfix:iHyq3nCtXCwPqfl3@maincluster.tchhu9m.mongodb.net/?retryWrites=true&w=majority', {
+connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
