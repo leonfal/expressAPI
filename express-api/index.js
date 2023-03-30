@@ -34,7 +34,12 @@ app.post('/api/mock', async (req, res) => {
     const { name, age, comment } = req.body;
   
     try {
-      const newMock = new Mock({ name, age, comment });
+      const newMock = new Mock({
+         name: "test", 
+         age: "12", 
+         comment: "test" 
+        });
+
       await newMock.save();
       
       res.status(201).json({ message: 'Mock query successful', mock: newMock });
@@ -43,16 +48,6 @@ app.post('/api/mock', async (req, res) => {
       res.status(400).json({ message: 'Error creating mock', error });
     }
   });
-
-// GET endpoint to fetch all mocks
-app.get('/api/mock', async (req, res) => {
-    try {
-        const mocks = await Mock.find();
-        res.status(200).json(mocks);
-    } catch (error) {
-        res.status(400).json({ message: 'Error fetching mocks', error });
-    }
-});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
