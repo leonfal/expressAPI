@@ -35,9 +35,9 @@ app.post('/api/mock', async (req, res) => {
   
     try {
       const newMock = new Mock({
-         name: name, 
-         age: age, 
-         comment: comment
+         name, 
+         age, 
+         comment
         });
 
       await newMock.save();
